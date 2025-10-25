@@ -87,12 +87,54 @@ int main() {
                 int tot = bott - top;
                 
                 //only connect if in top half. connect both to each other
-                if(tot/2 > j)
+                if((top + tot/2) > i)
                 { //redo
-                    nluzz[i][j].down = nluzz[i] + bott - j;
-                    nluzz[bott - i][j].down = nluzz[i] + j;
+                    nluzz[i][j].down = nluzz[bott - (i-top)] + j;
+                    nluzz[bott - (i-top)][j].down = nluzz[i] + j;
                 }
                 
+                
+                int left = j;    //upper part of word
+                int rite = j;   //bottom part of word
+                                //total length = bottom - top
+                if (j != 0)
+                {
+                    bool there = true;
+                    while(left > 0 && there)
+                    {
+                        there = false;
+                        left--;
+                        if(gluzz[i][left] >= 0)
+                        {
+                            there = true;
+                        }
+                    }
+                }
+
+                if (j != n)
+                {
+                    bool there = true;
+                    while(right < (n - 1)  && there)
+                    {
+                        there = false;
+                        bott++;
+                        if(gluzz[bott][j] <= n)
+                        {
+                            there = true;
+                        }
+                    }
+                }
+                
+                int tot = bott - top;
+                
+                //only connect if in top half. connect both to each other
+                if((top + tot/2) > i)
+                { //redo
+                    nluzz[i][j].down = nluzz[bott - (i-top)] + j;
+                    nluzz[bott - (i-top)][j].down = nluzz[i] + j;
+                }
+                
+
 
             }
             
